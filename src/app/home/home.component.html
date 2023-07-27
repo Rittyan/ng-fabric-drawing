@@ -1,1 +1,27 @@
-<p>home works!</p>
+<div class="section">
+    <div class="menu-bar">
+        <div>
+            <mat-button-toggle-group name="drawingMode" [ngModel]="drawingMode" (change)="changeDrawingMode($event)" aria-label="Draw Mode">
+                <mat-button-toggle value="pencil">Pencil</mat-button-toggle>
+                <mat-button-toggle value="erase">Erase</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <div>
+            <div>
+                <label id="example-name-label" class="example-name-label">太さ</label>
+            </div>
+            <mat-slider
+                    class="example-margin"
+                    [max]="100"
+                    [min]="1"
+                    [step]="1"
+                    [discrete]="true">
+                <input matSliderThumb [ngModel]="lineWidth | async" (ngModelChange)="changeLineWidth($event)" #slider>
+            </mat-slider>
+        </div>
+        <div>
+            <button mat-flat-button color="primary" (click)="saveCanvas()">保存</button>
+        </div>
+    </div>
+    <canvas id="canvas" width="800" height="600"></canvas>
+</div>

@@ -1,0 +1,19 @@
+mat-button-toggle-group {
+  margin-left: 12px;
+}
+canvas {
+  border: 1px solid black;
+}
+
+.section{
+  padding: 1rem;
+}
+
+.menu-bar{
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+  >div{
+    margin-right: 1rem;
+  }
+}
