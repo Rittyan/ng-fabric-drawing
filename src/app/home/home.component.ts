@@ -42,7 +42,32 @@ export class HomeComponent implements OnInit {
             freeDrawingCursor: 'none',
             backgroundColor: '#ffffff',
         })
+        this.initDrawCursor();
 
+        // 線の太さを変えた際の処理
+        this.lineWidth.subscribe((value) => {
+            // canvasの線設定を更新
+            this.canvas.freeDrawingBrush.width = value
+            // カーソルを線設定の太さに合わせる
+            this.drawCursor.set({radius: value / 2})
+
+        });
+        // 線の色を変えた際の処理
+        this.stroke.subscribe((value) => {
+            // canvasの線設定を更新
+            this.canvas.freeDrawingBrush.color = value
+            // カーソルを線設定の色に合わせる
+            this.drawCursor.set({fill: value})
+        });
+
+        this.restoreLineSetting()
+    }
+
+
+    /**
+     * ブラシカーソルをセットする
+     */
+    initDrawCursor() {
         // ブラシカーソル設定
         this.drawCursor = new fabric.Circle({
             radius: this.canvas.freeDrawingBrush.width / 2, // ポインタのサイズ
@@ -67,24 +92,6 @@ export class HomeComponent implements OnInit {
             const mouse = this.canvas.getPointer(options.e)
             this.drawCursor.set({left: mouse.x, top: mouse.y}).bringToFront().setCoords().canvas?.renderAll();
         });
-
-        // 線の太さを変えた際の処理
-        this.lineWidth.subscribe((value) => {
-            // canvasの線設定を更新
-            this.canvas.freeDrawingBrush.width = value
-            // カーソルを線設定の太さに合わせる
-            this.drawCursor.set({radius: value / 2})
-
-        });
-        // 線の色を変えた際の処理
-        this.stroke.subscribe((value) => {
-            // canvasの線設定を更新
-            this.canvas.freeDrawingBrush.color = value
-            // カーソルを線設定の色に合わせる
-            this.drawCursor.set({fill: value})
-        });
-
-        this.restoreLineSetting()
     }
 
     changeDrawingMode($event: any) {
@@ -148,6 +155,15 @@ export class HomeComponent implements OnInit {
             u8arr[n] = bstr.charCodeAt(n);
         }
         return new Blob([u8arr], {type:mime});
+    }
+
+    /**
+     * キャンバスをクリア
+     */
+    clearCanvas(){
+        this.canvas.clear();
+        this.canvas.setBackgroundColor('white', this.canvas.renderAll.bind(this.canvas));
+        this.initDrawCursor()
     }
 
 }

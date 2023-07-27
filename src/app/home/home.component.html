@@ -19,8 +19,9 @@
                 <input matSliderThumb [ngModel]="lineWidth | async" (ngModelChange)="changeLineWidth($event)" #slider>
             </mat-slider>
         </div>
-        <div>
+        <div class="button-box">
             <button mat-flat-button color="primary" (click)="saveCanvas()">保存</button>
+            <button mat-flat-button  (click)="clearCanvas()">Clear</button>
         </div>
     </div>
     <canvas id="canvas" width="800" height="600"></canvas>
